@@ -41,4 +41,7 @@ func (table *ChainedHashTable) Retreive(key HashType) (bool, keyValuePair) {
 	return table.data[insertIndex].search(condition)
 }
 
+
+
+
 // The other is through quadratic probing
