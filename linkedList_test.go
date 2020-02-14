@@ -13,10 +13,10 @@ func TestInsertion(t *testing.T) {
 	list := &linkedList{}
 
 	for i := 0; i < 100; i++ {
-		generatedTestData := -1000 + rand.Intn(2000)
+		generatedTestData := int32(-1000 + rand.Intn(2000))
 
 		list.insert(keyValuePair{
-			key: nil,
+			key: 0,
 			value: generatedTestData,
 		})
 
@@ -42,12 +42,12 @@ func TestSearch(t *testing.T) {
 
 	for i := range randArray {
 		list.insert(keyValuePair{
-			key: nil,
-			value: i,
+			key: 0,
+			value: int32(i),
 		})
 
 		if exists, _ := list.search(func(data keyValuePair) bool { 
-			return i == data.value 
+			return int32(i) == data.value 
 		}); !exists {
 			t.Error(fmt.Sprintf("Failed to find: %d after insertion", i))
 		}
@@ -64,7 +64,7 @@ func TestSize(t *testing.T) {
 
 	for i := 0; i < 100; i++ {
 		list.insert(keyValuePair{
-			key: nil,
+			key: 0,
 			value: 1,
 		})
 	}

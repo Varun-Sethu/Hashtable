@@ -7,21 +7,20 @@ import (
 
 
 // UniversalHash is a simple closure method that returns a hashfunction
-func UniversalHash(size uint64) func(HashType) uint64 {
+func UniversalHash(size uint32) func(uint32) uint32 {
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	// Implementation of universal hashing according to the Carter and Wegman method: https://www.cs.princeton.edu/courses/archive/fall09/cos521/Handouts/universalclasses.pdf
-	mersenneIntegers := []uint{19, 31, 61}
+	mersenneIntegers := []uint8{19, 31, 61}
 	// Compute a mersenne prime: 2^n - 1
-	p := uint64((1 << mersenneIntegers[rand.Intn(2)]) - 1)
+	p := 1 << (mersenneIntegers[rand.Intn(2)]) - 1
 	// Generate constants
-	a := uint64(1 + rand.Intn(int(p-1)))
-	b := uint64(rand.Intn(int(p)))
+	a := 1 + rand.Intn(p-1)
+	b := rand.Intn(p)
 
-	return func(data HashType) uint64 {
-		x := data.Serialize()
-		baseVal := a*x + b
+	return func(data uint32) uint32 {
+		baseVal := uint32(a)*data + uint32(b)
 
-		return ((baseVal) % p) % size
+		return ((baseVal) % uint32(p)) % size
 	}
 }
